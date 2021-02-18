@@ -1,0 +1,136 @@
+\documentclass[8pt]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage[margin=.9in]{geometry}
+%\topmargin=-0.45in      %
+%\evensidemargin=0in     %
+%\oddsidemargin=0in      %
+%\textwidth=6.5in        %
+%\textheight=9.0in       %
+%\headsep=0.25in         %
+
+
+\newcommand{\ans}[1]
+  {\noindent\fbox{\begin{minipage}[c]{\columnwidth}#1\end{minipage}}}
+
+
+\newcommand{\ip}[1]{\left\langle #1 \right\rangle}
+\newcommand{\torus}{\mathbb{T}}
+\newcommand{\RRR}{\mathbb{R}}
+\newcommand{\NNN}{\mathbb{N}}
+\newcommand{\ZZZ}{\mathbb{Z}}
+\newcommand{\QQQ}{\mathbb{Q}}
+\newcommand{\CCC}{\mathbb{C}}
+\newcommand{\HHH}{\mathcal{H}}
+\newcommand{\FFF}{\mathcal{F}}
+
+\newcommand{\B}[1]{\mathbf{ #1 }}
+
+
+
+\makeatletter
+\newcommand{\V}[2][r]{%
+  \gdef\@VORNE{1}
+  \left[\hskip-\arraycolsep%
+    \begin{array}{#1}\vekSp@lten{#2}\end{array}%
+  \hskip-\arraycolsep\right]}
+
+\def\vekSp@lten#1{\xvekSp@lten#1;vekL@stLine;}
+\def\vekL@stLine{vekL@stLine}
+\def\xvekSp@lten#1;{\def\temp{#1}%
+  \ifx\temp\vekL@stLine
+  \else
+    \ifnum\@VORNE=1\gdef\@VORNE{0}
+    \else\@arraycr\fi%
+    #1%
+    \expandafter\xvekSp@lten
+  \fi}
+\makeatother
+
+
+
+
+
+
+\begin{document}
+
+\begin{center}
+\textbf{Program 1 Feedback}
+\end{center}
+
+Hello all, I just finished grading your Programming one assignments and while most of you got the gist of the assignment many of your reports had problems with readability and organization.
+
+The following are a list of things I'd like you to pay attention to when turning in your future assignments.  
+
+Recall that style counts for about 20 \% of your grades on these assignments so it is IMPORTANT that you follow them.  I graded easily on style this time, but in the future will take off points if you don't follow the below criteria.
+
+ 
+Organization
+
+-Arrange your work in the following fashion
+
+problem 1
+ #1 analysis
+ #1 programming code
+ #1 results
+ 
+ problem 2
+ #2 analysis
+ #2 programming code
+ #3 results
+ 
+ and so on.  A reader should not have to search your entire report to find the answer to one problem.
+ 
+ 
+ - When discussing results from your code make sure that the results displayed close by.  You should not have a discussion of results on page 1 when the results are listed on page 10.  
+ 
+ 
+ 
+ 
+ Analysis
+ 
+ - You do not need to derive a method or show proofs for things done in class.  When using a method in the assignment state it in a concise manner.
+ 
+ For example you if using Euler's Method you would say something like
+ 
+ "Euler's Method is a O(h) accurate method given by
+ \[
+ y_{i+1} = y_i + h*f(y_i, t_i)
+ \]
+" 
+ 
+ The point of these assignments is for you to use these methods, not to derive them.
+ 
+ -  If you do not know how to typeset mathematics it is ok to leave a blank space and write the math in by hand.
+ 
+ This is an example of what should NOT be done
+ 
+"we solve the equation differential equation dy/dx = 4yx by separation of variables, first we multiply both sides by dx to get dy = 4y x dx then we divide both sides by y to get 1/y dy = 4 x dx and then we integrate to get ln(y) = 2x^2, then we exponential both sides to get y = e^(2x^2)"
+
+Nobody wants to read this.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}

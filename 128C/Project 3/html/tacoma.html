@@ -1,0 +1,294 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      --><title>tacoma</title><meta name="generator" content="MATLAB 7.10"><meta name="date" content="2014-05-27"><meta name="m-file" content="tacoma"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">main function</a></li><li><a href="#2">user defined parameters</a></li><li><a href="#4">plot setup</a></li><li><a href="#5">iteration</a></li><li><a href="#6">plotting y(t) and theta(t)</a></li><li><a href="#7">y(t) graph</a></li><li><a href="#8">theta(t) graph</a></li></ul></div><h2>main function<a name="1"></a></h2><p>Josh Grant - MAT 128C Project 3 - 5/28/14</p><pre class="codeinput">clc;
+close <span class="string">all</span>;
+clearvars;
+</pre><h2>user defined parameters<a name="2"></a></h2><pre class="codeinput">h = 0.01; <span class="comment">% step size</span>
+p = 500; <span class="comment">% number of steps per point</span>
+a = -6;
+b = 6;
+n = ceil((b-a)/(h*p)); <span class="comment">% rounds result up to nearest integer</span>
+n1 = ceil((b-a)/(h))
+</pre><pre class="codeoutput">
+n1 =
+
+        1200
+
+</pre><p>t=zeros([p+1,1]); y=zeros([p+1,4]);</p><pre class="codeinput">int=[a b];
+ic=[0 0 .001 0];
+<span class="comment">% ic=[y(1,1) y(1,2) y(1,3) y(1,4)];   %y(1,1) = y, y(1,3) = theta</span>
+y(1,:)=ic; <span class="comment">% first row of y matrix is initial conditions</span>
+t(1)=a; <span class="comment">% first time point is a</span>
+len=6;
+</pre><h2>plot setup<a name="4"></a></h2><pre class="codeinput">clf; <span class="comment">% clear current figure</span>
+set(gca, <span class="string">'XLim'</span>,[-8 8], <span class="string">'YLim'</span>,[-25 25], <span class="string">'XTick'</span>,[-8 0 8], <span class="string">'YTick'</span>,<span class="keyword">...</span>
+    [-20:5:20],<span class="string">'Drawmode'</span>,<span class="string">'fast'</span>,<span class="string">'Visible'</span>,<span class="string">'on'</span>,<span class="string">'NextPlot'</span>,<span class="string">'add'</span>);
+cla; <span class="comment">% clear current axis</span>
+axis <span class="string">square</span> <span class="comment">% make aspect ratio 1 to 1</span>
+road=line(<span class="string">'color'</span>,<span class="string">'b'</span>,<span class="string">'LineStyle'</span>,<span class="string">'-'</span>,<span class="string">'LineWidth'</span>,5,<span class="string">'erase'</span>,<span class="keyword">...</span>
+    <span class="string">'xor'</span>,<span class="string">'xdata'</span>,[],<span class="string">'ydata'</span>,[]);
+lcable=line(<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'LineStyle'</span>,<span class="string">'-'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'erase'</span>,<span class="keyword">...</span>
+    <span class="string">'xor'</span>,<span class="string">'xdata'</span>,[],<span class="string">'ydata'</span>,[]);
+rcable=line(<span class="string">'color'</span>,<span class="string">'r'</span>,<span class="string">'LineStyle'</span>,<span class="string">'-'</span>,<span class="string">'LineWidth'</span>,1,<span class="string">'erase'</span>,<span class="keyword">...</span>
+    <span class="string">'xor'</span>,<span class="string">'xdata'</span>,[],<span class="string">'ydata'</span>,[]);
+</pre><img vspace="5" hspace="5" src="tacoma_01.png" alt=""> <h2>iteration<a name="5"></a></h2><pre class="codeinput"><span class="keyword">for</span> k=1:n
+    <span class="keyword">for</span> i=1:p
+        t(i+1)=t(i)+h;
+<span class="comment">%         y(i+1,:)=trapstep(t(i),y(i,:),h);</span>
+          y(i+1,:)=RK4(t(i),y(i,:),h);
+<span class="comment">%         tplot(1,:)=(0:h:(n*p*h));</span>
+<span class="comment">%         yplot(i+1,:)=y(i+1,:);</span>
+    <span class="keyword">end</span>
+<span class="comment">%     tplot(k+1)=t(k)+h;</span>
+<span class="comment">%     yplot(k+1,:)=trapstep(tplot(k),y(k,:),h);</span>
+    k
+    n
+    y(1,:)=y(p+1,:);
+    t(1)=t(p+1);
+    z1(k)=y(1,1);
+    z3(k)=y(1,3);
+    c = len * cos(y(1,3));
+    s = len * sin(y(1,3));
+    set(road, <span class="string">'xdata'</span>, [-c c], <span class="string">'ydata'</span>, [-s-y(1,1) s-y(1,1)])
+    set(lcable, <span class="string">'xdata'</span>, [-c -c], <span class="string">'ydata'</span>, [-s-y(1,1) 8])
+    set(rcable, <span class="string">'xdata'</span>, [c c], <span class="string">'ydata'</span>, [s-y(1,1) 8])
+    drawnow;
+    pause(h)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+k =
+
+     1
+
+
+n =
+
+     3
+
+
+k =
+
+     2
+
+
+n =
+
+     3
+
+
+k =
+
+     3
+
+
+n =
+
+     3
+
+</pre><img vspace="5" hspace="5" src="tacoma_02.png" alt=""> <h2>plotting y(t) and theta(t)<a name="6"></a></h2><pre class="codeinput">yplot(1,:)=ic;  <span class="comment">% for passing values through iteration loop to outside</span>
+tplot1(1)=0;
+<span class="keyword">for</span> j=1:n1
+    tplot1(j+1)=tplot1(j)+h;
+    yplot(j+1,:)=RK4(tplot1(j),yplot(j,:),h);
+<span class="keyword">end</span>
+
+<span class="comment">% tplot1=linspace(0,n*h,length(yplot));</span>
+</pre><h2>y(t) graph<a name="7"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>,<span class="string">'Oscillations of Center of Bridge'</span>,<span class="string">'NumberTitle'</span>,<span class="string">'on'</span>,<span class="string">'Color'</span>,<span class="string">'white'</span>) <span class="comment">% gives windows a title (tutorial plot), labels the title figure 1, and make the border color cyan</span>
+plot(tplot1,yplot(:,1)',<span class="string">'*b'</span>);                <span class="comment">% Adds a scatter plot for (t,y(t))</span>
+grid <span class="string">on</span>                     <span class="comment">% Adds gridlines to the plot</span>
+title(<span class="string">'Displacement From Equilibrium as a Function of Time'</span>)
+legend(<span class="string">'y(t)'</span>,<span class="string">'Location'</span>,<span class="string">'NorthEast'</span>)         <span class="comment">% gives plot a legend for i,j,k, puts its location in northeast</span>
+xlabel(<span class="string">'t'</span>)          <span class="comment">% Add x label</span>
+ylabel(<span class="string">'y(t)'</span>)           <span class="comment">% Add y label</span>
+<span class="comment">% axis([-8 8 -15 15])          % Sets axis values ([xmin xmax ymin ymax])</span>
+</pre><img vspace="5" hspace="5" src="tacoma_03.png" alt=""> <h2>theta(t) graph<a name="8"></a></h2><pre class="codeinput">figure(<span class="string">'Name'</span>,<span class="string">'Oscillations of Center of Bridge'</span>,<span class="string">'NumberTitle'</span>,<span class="string">'on'</span>,<span class="string">'Color'</span>,<span class="string">'white'</span>) <span class="comment">% gives windows a title (tutorial plot), labels the title figure 1, and make the border color cyan</span>
+plot(tplot1,yplot(:,3)',<span class="string">'*r'</span>);                <span class="comment">% Adds a scatter plot for (t,y(t))</span>
+grid <span class="string">on</span>                     <span class="comment">% Adds gridlines to the plot</span>
+title(<span class="string">'Angle as a Function of Time'</span>)
+legend(<span class="string">'theta(t)'</span>,<span class="string">'Location'</span>,<span class="string">'NorthEast'</span>)         <span class="comment">% gives plot a legend for i,j,k, puts its location in northeast</span>
+xlabel(<span class="string">'t'</span>)          <span class="comment">% Add x label</span>
+ylabel(<span class="string">'theta(t)'</span>)           <span class="comment">% Add y label</span>
+
+max(y(:,3))
+ic(3)
+strmag = [<span class="string">'Magnification Factor = '</span>, num2str(max(y(:,3)/ic(3)))];
+display(strmag);
+</pre><pre class="codeoutput">
+ans =
+
+  8.5630e-005
+
+
+ans =
+
+  1.0000e-003
+
+
+strmag =
+
+Magnification Factor = 0.08563
+
+</pre><img vspace="5" hspace="5" src="tacoma_04.png" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.10<br></p></div><!--
+##### SOURCE BEGIN #####
+%% main function 
+% Josh Grant - MAT 128C
+% Project 3 - 5/28/14
+clc;
+close all;
+clearvars;
+%% user defined parameters
+h = 0.01; % step size
+p = 500; % number of steps per point
+a = -6;
+b = 6;
+n = ceil((b-a)/(h*p)); % rounds result up to nearest integer
+n1 = ceil((b-a)/(h)) 
+
+%%
+% t=zeros([p+1,1]);
+% y=zeros([p+1,4]);
+int=[a b];
+ic=[0 0 .001 0];
+% ic=[y(1,1) y(1,2) y(1,3) y(1,4)];   %y(1,1) = y, y(1,3) = theta
+y(1,:)=ic; % first row of y matrix is initial conditions
+t(1)=a; % first time point is a
+len=6; 
+
+%% plot setup
+clf; % clear current figure
+set(gca, 'XLim',[-8 8], 'YLim',[-25 25], 'XTick',[-8 0 8], 'YTick',...
+    [-20:5:20],'Drawmode','fast','Visible','on','NextPlot','add');
+cla; % clear current axis
+axis square % make aspect ratio 1 to 1
+road=line('color','b','LineStyle','-','LineWidth',5,'erase',...
+    'xor','xdata',[],'ydata',[]);
+lcable=line('color','r','LineStyle','-','LineWidth',1,'erase',...
+    'xor','xdata',[],'ydata',[]);
+rcable=line('color','r','LineStyle','-','LineWidth',1,'erase',...
+    'xor','xdata',[],'ydata',[]);
+
+
+%% iteration
+for k=1:n
+    for i=1:p
+        t(i+1)=t(i)+h;
+%         y(i+1,:)=trapstep(t(i),y(i,:),h);
+          y(i+1,:)=RK4(t(i),y(i,:),h);  
+%         tplot(1,:)=(0:h:(n*p*h));
+%         yplot(i+1,:)=y(i+1,:);
+    end
+%     tplot(k+1)=t(k)+h;
+%     yplot(k+1,:)=trapstep(tplot(k),y(k,:),h);
+    k
+    n
+    y(1,:)=y(p+1,:);
+    t(1)=t(p+1);
+    z1(k)=y(1,1);
+    z3(k)=y(1,3);
+    c = len * cos(y(1,3));
+    s = len * sin(y(1,3));
+    set(road, 'xdata', [-c c], 'ydata', [-s-y(1,1) s-y(1,1)])
+    set(lcable, 'xdata', [-c -c], 'ydata', [-s-y(1,1) 8])
+    set(rcable, 'xdata', [c c], 'ydata', [s-y(1,1) 8])
+    drawnow;
+    pause(h)
+end
+
+%% plotting y(t) and theta(t)
+yplot(1,:)=ic;  % for passing values through iteration loop to outside
+tplot1(1)=0;
+for j=1:n1
+    tplot1(j+1)=tplot1(j)+h;
+    yplot(j+1,:)=RK4(tplot1(j),yplot(j,:),h);
+end
+
+% tplot1=linspace(0,n*h,length(yplot));
+
+%% y(t) graph
+figure('Name','Oscillations of Center of Bridge','NumberTitle','on','Color','white') % gives windows a title (tutorial plot), labels the title figure 1, and make the border color cyan
+plot(tplot1,yplot(:,1)','*b');                % Adds a scatter plot for (t,y(t))
+grid on                     % Adds gridlines to the plot
+title('Displacement From Equilibrium as a Function of Time')
+legend('y(t)','Location','NorthEast')         % gives plot a legend for i,j,k, puts its location in northeast
+xlabel('t')          % Add x label
+ylabel('y(t)')           % Add y label
+% axis([-8 8 -15 15])          % Sets axis values ([xmin xmax ymin ymax])
+
+%% theta(t) graph
+figure('Name','Oscillations of Center of Bridge','NumberTitle','on','Color','white') % gives windows a title (tutorial plot), labels the title figure 1, and make the border color cyan
+plot(tplot1,yplot(:,3)','*r');                % Adds a scatter plot for (t,y(t))
+grid on                     % Adds gridlines to the plot
+title('Angle as a Function of Time')
+legend('theta(t)','Location','NorthEast')         % gives plot a legend for i,j,k, puts its location in northeast
+xlabel('t')          % Add x label
+ylabel('theta(t)')           % Add y label
+
+max(y(:,3))
+ic(3)
+strmag = ['Magnification Factor = ', num2str(max(y(:,3)/ic(3)))];
+display(strmag);
+##### SOURCE END #####
+--></body></html>

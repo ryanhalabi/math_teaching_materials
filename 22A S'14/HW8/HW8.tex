@@ -1,0 +1,802 @@
+\documentclass[8pt]{article}
+
+\usepackage{graphicx}
+\usepackage{amsmath,amsfonts,amsthm,amssymb}
+\usepackage[margin=.9in]{geometry}
+%\topmargin=-0.45in      %
+%\evensidemargin=0in     %
+%\oddsidemargin=0in      %
+%\textwidth=6.5in        %
+%\textheight=9.0in       %
+%\headsep=0.25in         %
+
+
+\newcommand{\ans}[1]
+  {\noindent\fbox{\begin{minipage}[c]{\columnwidth}#1\end{minipage}}}
+
+
+\newcommand{\ip}[1]{\left\langle #1 \right\rangle}
+\newcommand{\torus}{\mathbb{T}}
+\newcommand{\RRR}{\mathbb{R}}
+\newcommand{\NNN}{\mathbb{N}}
+\newcommand{\ZZZ}{\mathbb{Z}}
+\newcommand{\QQQ}{\mathbb{Q}}
+\newcommand{\CCC}{\mathbb{C}}
+\newcommand{\HHH}{\mathcal{H}}
+\newcommand{\FFF}{\mathcal{F}}
+
+\newcommand{\B}[1]{\mathbf{ #1 }}
+
+
+
+\makeatletter
+\newcommand{\V}[2][r]{%
+  \gdef\@VORNE{1}
+  \left[\hskip-\arraycolsep%
+    \begin{array}{#1}\vekSp@lten{#2}\end{array}%
+  \hskip-\arraycolsep\right]}
+
+\def\vekSp@lten#1{\xvekSp@lten#1;vekL@stLine;}
+\def\vekL@stLine{vekL@stLine}
+\def\xvekSp@lten#1;{\def\temp{#1}%
+  \ifx\temp\vekL@stLine
+  \else
+    \ifnum\@VORNE=1\gdef\@VORNE{0}
+    \else\@arraycr\fi%
+    #1%
+    \expandafter\xvekSp@lten
+  \fi}
+\makeatother
+
+
+
+
+
+
+\begin{document}
+
+\begin{center}
+\textbf{HW8 Solutions, M22A, Spring Quarter 2014, Prof. Sornborger} \\
+\end{center}
+
+\textbf{EMAIL any corrections to rghalabi@math.ucdavis.edu}\\
+
+
+\textbf{6.1}: 3,4,8,9,12,14,15,27,28,36
+
+
+\begin{enumerate}
+
+\item[3]
+
+Compute eigenvalues and eigenvector of $A$ and $A^{-1}$.  Check the trace!
+
+\[
+A = \V{0,2;1,1}, \ \ \ A^{-1} = \V{-1/2, 1 ; 1/2, 0}
+\]
+
+
+SOLUTION\\
+
+We first solve for the eigenvalues of $A$ by solving det $ (A - \lambda I) = 0$
+\[
+\text{det}(A - \lambda I) = -\lambda *(1-\lambda) - 2 = \lambda^2 - \lambda -2 = 0
+\]
+which has solutions $\lambda = -1, 2$
+
+We next solve the equations $Ax = -1 x$, and $Ax = 2 x$ to find the eigenvector and eigenvalue pairs
+\[
+\lambda_1 = -1, x_1 = \V{-2;1}, \ \ \lambda_2 = 2 , x_2 = \V{1;1}
+\]
+
+we do the same for $A^{-1}$ to find
+\[
+\lambda_1 = -1, x_1 = \V{-2;1}, \ \ \lambda_2 = .5 , x_2 = \V{1;1}
+\]
+
+We notice that $A^{-1}$ has the same eigenvectors as $A$.  When $A$ has eigenvectors $\lambda_1,\lambda_2$ , $A^{-1}$ has eigenvalues $1/ \lambda_1 , 1/  \lambda_2$.  Why is this?  Because if $Ax = \lambda x$ then
+\[
+Ax = \lambda x \rightarrow x = \lambda A^{-1}x \rightarrow A^{-1}x = \frac{1}{\lambda} x\\
+\]
+
+
+
+\item[4]
+
+Compute the eigenvalues and Eigen vectors of $A$ and $A^2$:
+\[
+A = \V{-1,3;2,0} \ \ \ A^2 = \V{7, -3; -2 , 6}
+\]
+
+
+
+SOLUTION\\
+
+For $A$ we have
+\[
+\lambda_1 = -3, x_1 = \V{-3;2}, \ \ \lambda_2 = 2 , x_2 = \V{1;1}
+\]
+
+Now since $Ax = \lambda x$ we have
+\[
+A^2x = A \lambda x = \lambda^2 x
+\]
+so that $A^2$ has the same eigenvectors as $A$ and its eigenvalues are just those of $A$'s squared
+
+The sums of the eigenvalues of a matrix is equal to the sum of its eigenvalues (p.289)so $\lambda_1^2 + \lambda_2^2 = 13$\\
+
+
+
+
+
+
+\item[8]
+
+\begin{enumerate}
+\item If you know that $x$ as an eigenvector the way to find $\lambda$ is to
+
+SOLUTION\\
+
+You simply find the $\lambda$ that satisfies the equation $Ax = \lambda x$ (here $A$ and $x$ are givens)\\
+
+\item if you know that $\lambda$ is an eigenvalue, the way to find $x$ is to
+
+
+SOLUTION\\
+
+You simply find the $x$ that satisfies the equation $Ax = \lambda x$ (here $A$ and $\lambda$ are givens), your solution will usually have a free variable, simply set it equal to any constant to select a single eigenvector.\\
+
+
+\end{enumerate}
+
+
+
+
+\item[9]
+
+What do you do to the equation $Ax = \lambda x$ in order to prove a,b,d
+
+\begin{enumerate}
+\item $\lambda^2$ is an eigenvalue of $A^2$
+
+SOLUTION\\
+
+Multiply both sides by $A$ to get $A^2 x = \lambda Ax = \lambda^2 x$
+
+
+\item $\lambda^{-1}$ is an eigenvalue of $A^{-1}$\\
+
+
+SOLUTION\\
+
+Multiply both sides by $A^{-1}$, $x = \lambda A^{-1} x$, then divide by $\lambda$.
+
+
+
+\item $\lambda + 1 $ is an eigenvalue of $A+I$\\
+
+
+SOLUTION\\
+
+Add $x$ to both sides $Ax  = \lambda x \rightarrow  Ax + x = (\lambda + 1) x \rightarrow (A + I) x = (\lambda +1)x$\\
+
+\end{enumerate}
+
+
+
+
+\item[12]
+Find three eigenvectors for this matrix $P$ (projection matricie have $\lambda = 0,1$)
+
+\[
+P = \V{.2, .4 , 0;.4, .8, 0; 0,0,1}
+\]
+If two eigenvectors share the same $\lambda$ so do all their linear combinations.  Find an eigevector of $P$ with no zero components.
+
+
+SOLUTION\\
+
+The set of eigenvalues and eigenvectors for $P$ are
+\[
+\lambda_1 = 1, x_1 = \V{1;2;0}, \ \ \lambda_2 = 1 , x_2 = \V{0;0;1}, \ \ \ \lambda_3 = 0, x_3 = \V{ 2;-1;0}
+\]
+The problem is that all these components have a zero component, but since $x_1, x_2$ share the same eigenvalue we have that $x_1 + x_2 = \V{1;2;1}$ is an eigenvector with eigenvalue $1$.\\
+
+
+
+
+
+
+
+
+
+
+
+
+\item[14]
+
+Solve det$(Q - \lambda I) = 0$ by the quadratic formula to reach $\lambda = \cos(\theta) \pm i \sin(\theta)$
+\[
+Q = \V{ \cos \theta, - \sin \theta; \sin \theta, \cos \theta}
+\]
+$Q$ rotates the xy plane by the angle $\theta$ and has no real $\lambda$'s.  Find the eigenvectors of $Q$ by solving $(Q - \lambda I) x = 0$ using $i^2 = -1$
+
+SOLUTION\\
+
+Solving the determinant formula gives us $\lambda = \cos(\theta) \pm i \sin(\theta)$ now we solve $Qx = \lambda x$ (equivalent to $(Q- \lambda I )x = 0$) to find the eigenvectors
+
+
+\begin{align*}
+Qx = \V{ \cos \theta x_1 - \sin \theta x_2 ; \sin \theta x_1 + \cos \theta x_2} &= \V{ ( \cos(\theta) \pm i \sin(\theta)) x_2; ( \cos(\theta) \pm i \sin(\theta))x_2} = \lambda x 
+\end{align*}
+solving this equation for the two different cases, $\pm$, and using $i^2 = -1$ gives the eigenvectors
+\[
+\lambda_1 = \cos(\theta) - i \sin(\theta) , x_1 = \V{-i;1}, \ \ \lambda_2 = \cos(\theta) + i \sin(\theta) , x_2 = \V{i;1}\]
+
+
+
+
+\item[15]
+
+ Every pemutaiton matrix leaves $x = (1,1, \cdots ,1 ,1 )$ unchanged, so $\lambda = 1$.Find two more $\lambda$'s for these $P$
+\[
+P = \V{ 0,1,0; 0,0,1;1,0,0}, \ \ \  P = \V{0,0,1; 0,1,0; 1,0,0}
+\]  
+
+
+SOLUTION\\
+
+Solving for det$(A - \lambda I) = 0$ we find $\lambda^3 = 1$ who has solutions $\lambda = 1, \frac{-1 \pm i \sqrt{3}}{2}$
+
+
+We do the same procedure for the second matrix and find $\lambda = 1,1,-1$.\\
+
+
+
+
+
+
+
+
+\item[27]
+
+Find the rank and the four eigenvalues of $A$ and $C$
+\[
+A = \V{ 1,1,1,1;  1,1,1,1;  1,1,1,1;  1,1,1,1 }, \ \ \ C = \V{ 1,0,1,0;  0,1,0,1;  1,0,1,0;  0,1,0,1 }
+\]
+
+
+SOLUTION\\
+Clearly the dimension of the column space of $A$ is 1 so Rank($A$) = 1, so we can expect only one eigenvalue with nonzero eigenvector, solving for them you find $\lambda = 4,0,0,0$
+
+
+Once again the rank of $C$ can be seen to be 2 (since there are only 2 independent column vectors in $C$), this means we can only expect 2 nonzero eigenvalues, solving for them we find $\lambda = 2,2,0,0$\\
+
+
+\item[28]
+
+
+Find the eigenvalues and determinants of 
+\[
+B = \V{ 0,1,1,1;  1,0,1,1;  1,1,0,1;  1,1,1,0 } \ \ \ C = - \V{ 0,1,1,1;  1,0,1,1;  1,1,0,1;  1,1,1,0 }
+\]
+
+
+SOLUTION\\
+
+By computation we find for $B$, $\lambda = 3,-1,-1,-1$.  and for $C$ we simply have the opposite's since if $Ax = \lambda x$ then $-A x = -\lambda x$.\\
+
+\item[36]
+
+
+Is there a real 2 by 2 matrix other then $I$ with $A^3 = I$?  Its eigenvalues must satisfy $\lambda^3 = 1$.  What trace and determinant would this give?  Construct a rotation matrix as $A$ (which angle of rotation?)
+
+SOLUTION\\
+
+The solutions to $\lambda^3 = 1$ are $\lambda = 1, e^{2\pi i/3}, e^{-2\pi i/3}$ choosing the latter two
+
+The determinant of this matrix would equal $\lambda_1 \lambda_2 = 1$ and the trace would equal 
+\[
+\lambda_2  + \lambda_1 = \cos 2 \pi  /3 + i \sin 2 \pi  /3 + \cos + \cos - 2 \pi /3 + i \sin - 2 \pi  /3 = 2 \cos 2 \pi  /3 = -1 
+\]
+
+
+Defining a rotation matrix
+\[
+A = \V{ \cos \theta , - \sin \theta; \sin \theta, \cos \theta}
+\]
+we choose $\theta$ so that it satisfies the above constraints, in this case $\theta = 2\pi/3$
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+
+\textbf{6.2}: 1,2,3,18,26,35,36 
+
+
+
+\begin{enumerate}
+
+
+\item[1]
+
+\begin{enumerate}
+\item Factor these two matrices into $A = S \Lambda S^{-1}$
+\[
+A = \V{1,2;0,3}, \ \ \ A = \V{1,1;3,3}
+\]
+
+
+SOLUTION\\
+
+We first find the eigenvalues and eigenvectors of $A$
+\[
+\lambda_1 = 3, x_1 = \V{1;1}, \ \ \ \lambda_2 =1, x_2 = \V{1;0}
+\]
+we then construct the $S$ and $\Lambda$ out of these.
+\[
+\Lambda = \V{3,0;0,1}, \ \ \ S = \V{1,1;1,0}
+\]
+notice how the 1st column of $A$ and $S$ contain a corresponding pair of eigenvalue and eigenvector, the same for the 2nd column.
+
+Do the same procedure for the second matrix.\\
+
+
+
+\item If $A = S \Lambda S^{-1}$ then $A^3 =  $ and $A^{-1} = $
+
+
+SOLUTION\\
+
+\[
+A^3 = S \Lambda S^{-1}S \Lambda S^{-1}S \Lambda S^{-1} = S \Lambda^3 S^{-1}
+\]
+
+\[
+A^{-1} = \left( S \Lambda S^{-1} \right)^{-1} = S \Lambda^{-1} S^{-1}
+\]
+recall that since $\Lambda$ is a diagonal matrix, finding its inverse is very easy, you simply invert each of it's elements on the diagonal (i.e. 4 becomes 1/4)\\
+\end{enumerate}
+
+
+
+
+
+\item[2]
+
+
+If $A$ has $\lambda_1 = 2$ with eigenvector $x_1 = (1,0)$ and $\lambda_2 = 5$ with $x_2 = (1,1)$ use $S\lambda S^{-1}$ to find $A$.  No other matrix has the same $\lambda$'s and $x$'s.
+
+
+SOLUTION\\
+
+\[
+A = S \Lambda S^{-1} = \V{ 1,1;0,1} \V{2,0;0,5} \V{ 1,-1;0,1} \\
+\]
+
+
+
+
+
+
+\item[3]
+
+
+Suppose $A = S \Lambda S^{-1}$.  What is the eigenvalue matrix for $A + 2I$?  What is the eigenvector matrix?  Check that $A + 2I = ()()()^{-1}$
+
+
+SOLUTION\\
+
+\[
+A + 2I = S \Lambda S^{-1} + 2I = S \Lambda S^{-1} + 2 S IS^{-1} = S (\Lambda + 2I) S^{-1}\\
+\]
+
+
+
+
+\item[18]
+
+Diagonalize $A$ and compute $S \Lambda^k S^{-1}$ to prove this formula for $A^k$
+\[
+A = \V{2,-1;-1,2} \ \ \ A^k = .5 \V{ 1+3^k, 1-3^k; 1-3^k, 1+3^k}
+\]
+
+
+
+
+SOLUTION\\
+computing the eigenvalues and eigenvectors we find
+\[
+\lambda_1 = 3, \ \ \ x_1 = \V{-1;1}, \ \ \ \lambda_2 = 1, x_2 = \V{1;1}
+\]
+so that
+\[
+A = \V{-1,1;1,1} \V{3,0;0,1} \frac{1}{2} \V{-1,1;1,-1}
+\]
+so that
+
+\[
+A^k = S \Lambda^k S^{-1} = \V{-1,1;1,1} \V{3^k,0;0,1^k} \frac{1}{2} \V{-1,1;1,-1} = 1/2 \V{1+3^k,1-3^k;1-3^k,1+ 3^k} \\
+\]
+
+
+\item[26]
+
+
+Suppose $Ax = \lambda x$.  If $\lambda = 0$ then $x$ is in the nullspace.  If $\lambda \neq 0$ then $x$ is in the column space.  Those spaces have dimensions $(n-r) + r = n$.  So why doesn't every square matrix have $n$ linearly independent eigenvectors?
+
+
+SOLUTION\\
+
+
+
+Because if a n x n square matrix had $n$ linearly independent eigenvectors that would mean it had a n dimensional column space, we know that this is not true all square matrices.\\
+
+
+
+
+\item[35]
+
+The powers $A^k$ approach zero if all $| \lambda_i | < 1$ and they blow up if any $\lambda_i | >1$  Peter Lax gives these striking examples in his book Linear Algebra
+\[
+A = \V{3,2;1,4}, \ \ \ B = \V{3,2;-5,-3} , \ \ \ C = \V{5,7;-3,-4}, \ \ \ D = \V{5,6.9;-3,-4}
+\]
+\[
+\| A^{1024} \| > 10^{700}, \ \ \ B^{1024} = I, \ \ \ C^{1024} = -C, \ \ \ \| D^{1024} \| < 10^{-78}
+\]
+Find the eigenvalues $\lambda = e^{i \theta}$ of $B$ and $C$ to show $B^4 = I$ and $C^3 = -I$.
+
+
+
+
+
+SOLUTION\\
+
+Calculating the eigenvalues we find $\lambda = i, -i$.  These two eigenvalues have two associated eigenvectors $x,y$, since any vector $z$ can be constructed out of $x,y$ we have $z = ax + by$ so that
+\[
+B^4z = aB^4x + b B^4 y = a (i)^4x + b(-i)^4 y = ax + by = z 
+\]
+so that clearly $B^4 = I$.
+
+Do the same procedure for $C^4$.
+
+
+\item[36]
+
+
+
+The $n$th power of rotation through $\theta$ is rotation through $n \theta$
+\[
+A^n = \V{ \cos\theta , - \sin \theta; \sin \theta , \cos \theta}^n =  \V{ \cos n \theta , - \sin n\theta; \sin n\theta , \cos n\theta}
+\]
+Prove that neat formula by diagonalizing $A$, the eigenvectors are $(1,i)$ and $(i,1)$.  Use Euler's formula.
+
+SOLUTION\\
+
+We have that
+\[
+\lambda_1 = \cos \theta - i \sin \theta, \  x_1 = (1,i), \ \ \ \lambda_2 = \cos \theta + i \sin \theta, \ x_2 = (i,1)
+\]
+
+Computing
+\[
+A^k = S \Lambda^k S^{-1} = \V{ 1,i;i,1} \V{  (\cos \theta - i \sin \theta)^n , 0; 0 , (\cos \theta + i \sin \theta)^n }  1/2  \V{ 1,-i;-i,1}
+\]
+will give the desired result.
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+\textbf{6.3}: 1,4
+
+
+\begin{enumerate}
+
+
+
+\item[1]
+Find two $\lambda$'s and $x$'s so that $u = e^{\lambda t} x$ solves
+
+\[
+du/dt = \V{ 4, 3; 0,1} u
+\]
+
+
+What combination $u = c_1 e^{\lambda_1 t} x_1 + c_2 e^{\lambda_2 t} x_2$ starts from $u(0) = (5,-2)$.
+
+SOLUTION\\
+
+we first find the eigenvalues and eigenvectors of $A = \V{4,3;0,1}$
+
+$\lambda_1 = 1, x_1 = (1,-1)$ and $\lambda_2 = 4, x_2 = (1,0)$  
+
+
+We construct our solution
+\[
+u(t) = C_1 \V{ 1;-1} e^{t} + C_2 \V{1;0} e^{4t}
+\]
+and choose $C_1,C_2$ to enforce the condition that $u(0) = (5,-2)$
+\[
+u(0) = C_1 \V{ 1;-1}  + C_2 \V{1;0} = \V{5;-2}
+\]
+so that $C_1 = 2, C_2 = 3$
+
+\item[4]
+
+If $v(0) = 30, w(0) = 10$ and they are modeled by the differential equations $(v' = dv/dt)$
+\[
+v' = w-v, \ \ \ w' = v-w
+\]
+Show that $v+w$ is constant ($= 40$).  Find the matrix in $A$ that models you would use to rewrite this problem as
+\[
+u ' = Au
+\]
+and find its eigenvalues and eigenvectors.  What are $v$ and $w$ at $t=1$ and $t= \infty$?\\
+
+
+
+SOLUTION
+
+$v+w$ can be shown to be constant by taking its derivative,
+\[
+(v+w)' = v' + w' = w - v + v-w = 0
+\]
+since its derivative is equal to $0$, it is a constant, so that
+\[
+v(t)  + w(t) = v(0) + w(0) = 10 + 30 = 40
+\]
+
+
+With 
+\[
+A = \V{ -1,1;1,-1}
+\]
+the problem can be rewritten as $u'  = Au$ where $ u = (v,w)$.  Solving for $A$'s eigenvalues and eigenvectors we find
+\[
+\lambda_1 = 0, \ x_1 = \V{1;1}, \ \ \ \lambda_2 = -2,\  x_2 = \V{-1;1}
+\]
+this gives us the solution
+\[
+u(t) = C_1 \V{1;1} + C_2 \V{-1;1}e^{-2t}
+\]
+solving for $C_1, C_2$ using $u(0) = (30,10)$ we find
+\[
+u(0) = C_1 \V{1;1} + C_2 \V{-1;1} = \V{30;10} 
+\]
+so that
+\[
+u(t) = 20 \V{1;1} -10 \V{-1;1}e^{-2t}
+\]
+
+so that $u(1) = 20 \V{1;1} -10 \V{-1;1}e^{-2}$ and $u(\infty) = 20 \V{1;1} $.
+
+\end{enumerate}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\newpage
+
+
+\textbf{6.4}: 2,4,5,7 
+
+\begin{enumerate}
+
+\item[2]
+If $C$ is symmetric prove that $A^T C A$ is also symmetric (transpose it).  When $A$ is 6 by 3 what are the shapes of $C$ and $A^TCA$?
+
+
+SOLUTION\\
+
+Being symmetric means $C^T = C$ so since
+\[
+(A^T C A)^T = A^T C^T (A^T)^T = A^T C A 
+\] 
+
+we find that $A^T C A$ is symmetric.
+
+if $A$ is 6x3, this means that $C$ must be 6x6 (otherwise matrix multiplication wouldn't make sense), and so $A^TCA = (3x6) * (6x6) * (6x3) = (3x6)*(6x3) = 3x3$ matrix\\
+
+
+
+
+\item[4]
+Find an orthogonal matrix $Q$ that diagonalizes $A = \V{-2,6;6,7}$.  What is $\Lambda$
+
+
+SOLUTION\\
+
+we first find the eigenvalues and eigenvectors
+\[
+\lambda_1 = 10, \ x_1 = (1,2)\ \ \ \lambda_2 = -5, \ x_2 = (-2,1)
+\]
+
+normalizing these eigenvectors we define the matrix
+\[
+Q = 1/\sqrt{5} \V{1,-2;2,1}, \ \ \ Q^{-1} = 1/\sqrt{5} \V{ 1,2;-2,1}
+\]
+we compute $ Q^{-1}A Q$ to find
+\[
+\Lambda = \V{10,0;0,-5}\\
+\]
+
+
+
+\item[5]
+
+Find an orthogonal matrix $Q$ that diagonalizes this symmetric matrix:
+
+\[
+A = \V{ 1,0,2;0,-1,-2;2,-2,0}
+\]
+
+
+SOLUTION\\
+
+we first find the eigenvalues and eigenvectors
+\[
+\lambda_1 = -3, \ x_1 = (-1,2,2))\ \ \ \lambda_2 = 3, \ x_2 = (2,-1,2), \ \ \ \lambda_3 = 0, \ x_3 = (-2,-2,1)
+\]
+normalizing the eigenvectors and placing them in $Q$ gives us
+\[
+Q = 1/ 3\V{ -1,2,-2;2,-1,-2;2,2,1         }, \ \ \ Q^{-1} = 1/ 3\V{ -1,2,2;2,-1,2;-2,-2,1         }
+\]
+
+computing gives us
+\[
+\Lambda = Q^{-1} A Q = \V{-3, 0,0;0,3,0;0,0,0}
+\]
+
+
+
+\item[7]
+
+
+\begin{enumerate}
+\item  Find an symmetric marix $\V{1,b;b,1}$ that has a negative eigenvalue.
+
+SOLUTION\\
+
+The eigenvalues of this matrix solve the equation 
+\[
+\text{det}(A - \lambda I) = (1- \lambda)^2 - b^2 = 0
+\]
+so that $\lambda = 1 \pm b$ which always has a negative eigenvalue whenever $|b| >1 $.\\
+
+
+\item How do you know it must have a negative pivot?
+
+SOLUTION\\
+
+On page 333 it states that \# of positive eigenvalues of $A = A^T$ is equal to the number of its positive pivots.\\
+
+
+\item  How do you know it can't have two negative eigenvalues?
+
+SOLUTION\\
+
+Because the determinant of $A$ must equal the product of its eigenvalues and
+\[
+1 - b^2 < 0
+\]
+for $|b| >1$ (which we are assuming from part a), this means that the two eigenvalues must have opposite signs.
+
+
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+
+\end{document}

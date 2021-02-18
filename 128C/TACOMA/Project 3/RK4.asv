@@ -1,0 +1,11 @@
+function [ y] = RK4( t, x, h )
+%% this is for solving for y with more accuracy, using runge kutta of order
+%  4. 
+    rk4k1 = h * ydot(t, y);
+    rk4k2 = h * ydot(t + 1/2*h, y +1/2*rk4k1);
+    rk4k3 = h * ydot(t +1/2*h, y + 1/2*rk4k2);
+    rk4k4 = h * ydot(t +h, y + rk4k3);
+
+    y = y +1/6*(rk4k1 + 2*rk4k2 + 2*rk4k3 + rk4k4);
+    
+end
